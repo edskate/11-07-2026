@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+        }
+
+        .color-box {
+            border-radius: 10px;
+            height: 100px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-box:hover {
+            transform: scale(1.05);
+        }
+
+        .color-label {
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Color Palette</h1>
+        <div class="color-grid">
+            <div class="color-box" style="background-color: #FF6B6B;">
+                <span class="color-label">#FF6B6B</span>
+            </div>
+            <div class="color-box" style="background-color: #4ECDC4;">
+                <span class="color-label">#4ECDC4</span>
+            </div>
+            <div class="color-box" style="background-color: #45B7D1;">
+                <span class="color-label">#45B7D1</span>
+            </div>
+            <div class="color-box" style="background-color: #FFA07A;">
+                <span class="color-label">#FFA07A</span>
+            </div>
+            <div class="color-box" style="background-color: #98D8C8;">
+                <span class="color-label">#98D8C8</span>
+            </div>
+            <div class="color-box" style="background-color: #F7DC6F;">
+                <span class="color-label">#F7DC6F</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
