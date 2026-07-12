@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Universe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 40px;
+            animation: float 3s ease-in-out infinite;
+            letter-spacing: 5px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .emoji-universe {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+            perspective: 1000px;
+        }
+
+        .emoji-orbit {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotateZ(0deg) rotateX(0deg); }
+            100% { transform: rotateZ(360deg) rotateX(360deg); }
+        }
+
+        .emoji-large {
+            font-size: 4em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+            user-select: none;
+        }
+
+        .emoji-orbit:hover .emoji-large {
+            font-size: 5.5em;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+
+        .emoji-orbit:nth-child(1) { animation-delay: 0s; }
+        .emoji-orbit:nth-child(2) { animation-delay: -1s; }
+        .emoji-orbit:nth-child(3) { animation-delay: -2s; }
+        .emoji-orbit:nth-child(4) { animation-delay: -3s; }
+        .emoji-orbit:nth-child(5) { animation-delay: -4s; }
+        .emoji-orbit:nth-child(6) { animation-delay: -5s; }
+        .emoji-orbit:nth-child(7) { animation-delay: -6s; }
+        .emoji-orbit:nth-child(8) { animation-delay: -7s; }
+
+        .center-orb {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, rgba(255, 100, 0, 0.1) 100%);
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4), inset 0 0 20px rgba(255, 215, 0, 0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                width: 80px;
+                height: 80px;
+                box-shadow: 0 0 30px rgba(255, 215, 0, 0.4), inset 0 0 20px rgba(255, 215, 0, 0.2);
+            }
+            50% { 
+                width: 100px;
+                height: 100px;
+                box-shadow: 0 0 50px rgba(255, 215, 0, 0.6), inset 0 0 30px rgba(255, 215, 0, 0.3);
+            }
+        }
+
+        .floating-emoji {
+            position: fixed;
+            font-size: 2em;
+            opacity: 0.6;
+            z-index: 1;
+            animation: float-random 15s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float-random {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translate(100px, -300px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .info-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            color: #ddd;
+            backdrop-filter: blur(10px);
+            animation: fade-in 1s ease;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .info-box h2 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .info-box p {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .nav-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(135deg, #ffaa00, #ffd700);
+        }
+
+        .counter {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #ffd700;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .emoji-universe {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                gap: 20px;
+            }
+
+            .emoji-large {
+                font-size: 3em;
+            }
+
+            .emoji-orbit:hover .emoji-large {
+                font-size: 4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="starfield"></div>
+    <div class="counter">Click the emojis! ✨</div>
+
+    <div class="container">
+        <h1>🌌 EMOJI UNIVERSE 🌌</h1>
+
+        <div class="info-box">
+            <h2>Welcome to the Cosmic Emoji Experience</h2>
+            <p>🌠 Explore a universe of emojis floating in space. Hover over each one to feel the cosmic energy! 🚀</p>
+        </div>
+
+        <div class="emoji-universe">
+            <div class="center-orb"></div>
+            
+            <div class="emoji-orbit">
+                <span class="emoji-large">🚀</span>
+            </div>
+
+            <div class="emoji-orbit">
+                <span class="emoji-large">🌙</span>
+            </div>
+
+            <div class="emoji-orbit">
+                <span class="emoji-large">⭐</span>
+            </div>
+
+            <div class="emoji-orbit">
+                <span class="emoji-large">🛸</span>
+            </div>
+
+            <div class="emoji-orbit">
+                <span class="emoji-large">🌠</span>
+            </div>
+
+            <div class="emoji-orbit">
+                <span class="emoji-large">🌌</span>
+            </div>
+
+            <div class="emoji-orbit">
+                <span class="emoji-large">🔭</span>
+            </div>
+
+            <div class="emoji-orbit">
+                <span class="emoji-large">🪐</span>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <a href="index05.html" class="nav-btn">← Back</a>
+            <a href="index.html" class="nav-btn">🏠 Home</a>
+        </div>
+    </div>
+
+    <script>
+        // Create starfield
+        const starfield = document.getElementById('starfield');
+        const starCount = 150;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starfield.appendChild(star);
+        }
+
+        // Create floating emojis
+        const emojis = ['✨', '🌟', '💫', '⭐', '🌠', '🔮', '💥', '🌈'];
+
+        function createFloatingEmoji() {
+            const emoji = document.createElement('div');
+            emoji.className = 'floating-emoji';
+            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = Math.random() * window.innerWidth + 'px';
+            emoji.style.top = window.innerHeight + 'px';
+            emoji.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(emoji);
+
+            setTimeout(() => emoji.remove(), 17000);
+        }
+
+        // Create floating emojis periodically
+        setInterval(createFloatingEmoji, 500);
+
+        // Click interaction
+        const emojiElements = document.querySelectorAll('.emoji-large');
+        let clickCount = 0;
+
+        emojiElements.forEach(emoji => {
+            emoji.addEventListener('click', function() {
+                clickCount++;
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 100);
+
+                if (clickCount % 5 === 0) {
+                    createFloatingEmoji();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
